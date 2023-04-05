@@ -1,25 +1,98 @@
 ---
-title: "analysis"
+title: "The Role of Shelters in Providing Emergency Housing especially for the Homeless"
+author: Syed Hassan
+thanks: "Code and data are available at: https://github.com/saiyedgh/Shelters_Toronto.git"
+date: "`r Sys.time()`"
+date-format: "D MMMM YYYY"
+abstract: "The city and the people of Toronto provide shelter to thousands of people every year. The majority that takes benefit from the city's overnight shelter are the homeless. The occupancy of these shelters is 100% on most nights and rarely does space go unoccupied. We need to make these shelters more accessible for the homeless and provide more funding to expand the program."
 format: pdf
+toc: TRUE
+number-sections: true
+bibliography: references.bib
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
 ```{r}
-1 + 1
-```
-
-You can add options to executable code like this 
-
-```{r}
+#| messages: false
 #| echo: false
-2 * 2
+#| warning: false
+#| output: false
+#### Preamble ####
+# Title: 
+# Author: Syed Hassan
+# Email: syed.ext@gmail.com
+# Date: 16 March 2023
+# GitHub: https://github.com/saiyedgh/Shelters_Toronto.git
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+#| include: false
+#| echo: false
+#| warning: false
+#| message: false
+
+##### Install and run the required libraries and packages #####
+
+# uncomment the installation files for your
+# install.packages("tidyverse")
+# install.packages("here")
+# install.packages("readr")
+# install.packages("readxl")
+# install.packages("kableExtra")
+# install.packages("scales")
+# install.packages("knitr")
+# install.packages("janitor")
+
+library(tidyverse)
+library(here)
+library(readr)
+library(readxl)
+library(kableExtra)
+library(scales)
+library(knitr)
+library(janitor)
+```
+\
+
+# Introduction
+
+Homelessness is a genuine concern of the city and the people of Toronto. The city has acquired plenty of permanent and temporary shelters to provide better housing and overnight shelters for the homeless as well as others seeking emergency housing. The city of Toronto, like many other metropolitan cities, has suffered from the problem of homelessness for years. However, the role of the shelters in helping the homeless might go unnoticed because of the increasing numbers on the streets. My analysis aims to discover the issue in detail using data provided by the city of Toronto. Through my analysis, I aim to take you deep into statistics as well as focus on the patterns in order to develop empathy for the homeless. Lastly, the analysis will conclude the role of the shelters of Toronto in helping people overall and how they can improve to include more people in need.
+
+
+# Data
+
+Coming soon...
+
+# Results
+
+Coming soon...
+
+
+# Discussion
+
+Coming soon...
+
+
+# Limitations
+
+Coming soon...
+
+
+# Conclusion
+
+Coming soon...
+
+
+\newpage
+
+# Appendix
+
+
+\newpage
+
+## Code
+
+
+\newpage
+
+# References
