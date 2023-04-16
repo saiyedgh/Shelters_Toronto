@@ -33,16 +33,7 @@ bibliography: references.bib
 
 ##### Install and run the required libraries and packages #####
 
-# uncomment the installation files for your
-# install.packages("tidyverse")
-# install.packages("here")
-# install.packages("readr")
-# install.packages("readxl")
-# install.packages("kableExtra")
-# install.packages("scales")
-# install.packages("knitr")
-# install.packages("janitor")
-
+library(opendatatoronto)
 library(tidyverse)
 library(here)
 library(readr)
@@ -53,6 +44,10 @@ library(knitr)
 library(janitor)
 ```
 \
+
+
+
+
 
 # Introduction
 
