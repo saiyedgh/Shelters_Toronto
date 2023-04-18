@@ -4,17 +4,13 @@
 # Data: 20 April 2023
 # Contact: syed.ext@gmail.com
 # License: MIT
-# Pre-requisites: The saved raw file 'inputs/data/raw/raw_data(2022 + 2021).csv', library: "tidyverse", "janitor", "reader", "here"
-
 
 #### Workspace setup ####
-# Set the seed for randomness
+# Setting a seed for randomness
 set.seed(100)
 
-
 #### Simulate data ####
-simulated_data <-
-  tibble(
+simulated_data <- tibble(
     # Simulates ids
     "id" = sample(
       x = c(1:500),
@@ -48,6 +44,4 @@ simulated_data <-
   )
 
 simulated_data
-
-
 
