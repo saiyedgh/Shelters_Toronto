@@ -1,19 +1,53 @@
 #### Preamble ####
-# Purpose: Simulates... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Data: 11 February 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Cleans the column names and removes excess columns.
+# Authors: Syed Hassan
+# Data: 20 April 2023
+# Contact: syed.ext@gmail.com
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: The saved raw file 'inputs/data/raw/raw_data(2022 + 2021).csv', library: "tidyverse", "janitor", "reader", "here"
 
 
 #### Workspace setup ####
-library(tidyverse)
-# [...UPDATE THIS...]
+# Set the seed for randomness
+set.seed(100)
+
 
 #### Simulate data ####
-# [...ADD CODE HERE...]
+simulated_data <-
+  tibble(
+    # Simulates ids
+    "id" = sample(
+      x = c(1:500),
+      size = 500,
+      replace = TRUE
+    ),
+    # Simulates organization name
+    "organization" = sample(
+      x = c("Org A", "Org B", "Org C", "Org D"),
+      size = 500,
+      replace = TRUE
+    ),
+    # Simulates area names
+    "location" = sample(
+      x = c("Danforth", "Toronto Center", "Toronto East", "Toronto West", "Etobicoke", "North York"),
+      size = 500,
+      replace = TRUE
+    ),
+    # Simulates shelter type
+    "type" = sample(
+      x = c("winter", "permanenet", "temporary", "Covid", "Housing"),
+      size = 500,
+      replace = TRUE
+    ),
+    # Simulates occupancy percentage
+    "YEAR" = sample(
+      x = c("20%", "100%", "90%", "55%", "75%"),
+      size = 500,
+      replace = TRUE
+    )
+  )
+
+simulated_data
 
 
 
