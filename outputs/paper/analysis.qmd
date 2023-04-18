@@ -48,25 +48,7 @@ library(janitor)
 
 ```{r}
 
-package <- show_package("21c83b32-d5a8-4106-a54f-010dbe49f6f2")
-package
 
-# get all resources for this package
-resources <- list_package_resources("21c83b32-d5a8-4106-a54f-010dbe49f6f2")
-
-# identify datastore resources; by default, Toronto Open Data sets datastore resource format to CSV for non-geospatial and GeoJSON for geospatial resources
-datastore_resources <- filter(resources, tolower(format) %in% c('csv', 'geojson'))
-head(datastore_resources)
-
-# load the 2022 datastore resource as a sample
-data_2022 <- filter(datastore_resources, row_number()==6) %>% get_resource()
-data_2022
-head(data_2022)
-
-data_2021 <- filter(datastore_resources, row_number()==4) %>% get_resource()
-data_2021
-
-head(data_2021)
 
 ```
 
