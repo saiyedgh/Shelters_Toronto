@@ -1,5 +1,5 @@
 #### Preamble ####
-# Purpose: Cleans the column names and removes excess columns.
+# Purpose: Simulates data to have a rough sketch of the required dataset.
 # Authors: Syed Hassan
 # Data: 20 April 2023
 # Contact: syed.ext@gmail.com
