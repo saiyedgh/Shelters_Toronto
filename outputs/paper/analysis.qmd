@@ -47,11 +47,74 @@ library(janitor)
 
 
 ```{r}
+#| echo: false
+#| warning: false
 
+### load the datasets
+
+data_2022 <- read_csv(
+  here::here("inputs/data/clean/clean_data_2022.csv"),
+  show_col_types = FALSE
+)
+
+data_2021 <- read_csv(
+  here::here("inputs/data/clean/clean_data_2021.csv"),
+  show_col_types = FALSE
+)
+
+```
+
+
+```{r}
+#| echo: false
+#| warning: false
+
+location_and_district <- data_2022 |> 
+  select(location_id, location_city) |>
+  distinct() |>
+  group_by(location_id, location_city) |>
+  summarise(total_count=n(), .groups = 'drop')
 
 
 ```
 
+
+```{r}
+
+```
+
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: fig_01
+#| fig-cap: Number of shelters in Toronto by district.
+#| fig-align: center
+#| fig-width: 6
+
+## Number of shelters in Toronto
+
+data_graph_shelters <- location_and_district |>
+  filter(location_city != "N/A")
+
+# Figure 01
+# creating a bar graph
+data_graph_shelters |>
+  ggplot(aes (x = location_city, y = total_count, fill = location_city)) +
+  geom_bar(stat = "identity", alpha = 1, width = 0.8) +
+  scale_y_continuous(breaks = seq(0, 100, 10)) +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 10)) +
+  scale_fill_discrete(name = "City District") +
+  theme_minimal() +
+  labs(
+     x = "Districts within the city of Toronto",
+     y = "Number of Shelters"
+   ) +
+  theme(axis.line = element_line(colour = "#5a6472", # border for the figure
+                                 size = 0.5, linetype = "solid"))
+
+```
 
 
 
@@ -88,10 +151,9 @@ Coming soon...
 
 # Appendix
 
-
-\newpage
-
 ## Code
+
+The report was created using *`R`* [@R] and *`R Studio`* [@r_studio] with *`Quarto`* [@quarto] -- a new version of *`R Markdown`* [@r_markdown]. The main library utilized for this purpose is *`Tidyverse`* [@tidyverse]. Its used sub-packages include *`dplyr`* [@dplyr] to enable query-like syntax, and *`ggplot`* [@ggplot] to create graphs and charts. Other packages and tools include *`here`* [@here], *`janitor`* [@janitor], *`knitr`* [@knitr], *`kableExtra`* [@kableExtra], and *`scales`* [@scales]. Their respective function is to find *CSV* files, clean data, generate reports, create tables, and enable customized legends and break points.
 
 
 \newpage
