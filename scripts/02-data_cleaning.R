@@ -14,11 +14,13 @@
 # install.packages("janitor")
 # install.packages("readr")
 # install.packages("here")
+# install.packages("lubridate")
 
 library(tidyverse)
 library(janitor)
 library(readr)
 library(here)
+library(lubridate)
 
 
 #### Clean data ####
@@ -52,6 +54,7 @@ clean_selected_data_2022 <- clean_data_2022 |>
     program_model,
     program_area,
     overnight_service_type,
+    service_user_count,
     capacity_actual_bed,
     capacity_actual_room,
     occupancy_rate_beds,
@@ -69,19 +72,42 @@ clean_selected_data_2021 <- clean_data_2021 |>
     program_model,
     program_area,
     overnight_service_type,
+    service_user_count,
     capacity_actual_bed,
     capacity_actual_room,
     occupancy_rate_beds,
     occupancy_rate_rooms
   )
 
-# checking the selected data's column names
-head(clean_selected_data_2022)
-head(clean_selected_data_2021)
+## Fixing the dates
+
+# replace year yy with yyyy
+fix_year_2022 <- clean_selected_data_2022 |>
+  mutate(occupancy_date = str_replace(occupancy_date, "22", "2022"))
+
+# convert character to date
+fix_year_2022$occupancy_date <- ymd(fix_year_2022$occupancy_date)
+fix_year_2022$occupancy_date |> 
+  class()
+
+# 2021
+fix_year_2021 <- clean_selected_data_2021 |>
+  mutate(occupancy_date = str_replace(occupancy_date, "21", "2021"))
+
+# convert character to date
+fix_year_2021$occupancy_date <- ymd(fix_year_2021$occupancy_date)
+
+fix_year_2021$occupancy_date |> 
+  class()
+
+
+# checking the selected data's column names and values
+head(fix_year_2022)
+head(fix_year_2021)
 
 # checking if the data is a data frame
-clean_selected_data_2022 |> class()
-clean_selected_data_2021 |> class()
+fix_year_2022 |> class()
+fix_year_2021 |> class()
 
 #### Save data ####
 # saving the data to specific files

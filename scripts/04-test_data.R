@@ -23,6 +23,14 @@ test_clean_data_2021 <- read_csv(
   show_col_types = FALSE
 )
 
+## testing if the date column is date data type or characte
+
+test_clean_data_2022$occupancy_date[1] |>
+  class()
+
+test_clean_data_2021$occupancy_date[1] |>
+  class()
+
 ## testing if the id column is complete without empty records
 test_clean_data_2022$x_id |> 
   is.null()
