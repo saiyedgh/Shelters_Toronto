@@ -44,6 +44,7 @@ clean_data_2021 <- raw_data_2021 |>
 clean_selected_data_2022 <- clean_data_2022 |>
   select(
     x_id,
+    location_id,
     occupancy_date,
     organization_name,
     location_city,
@@ -60,6 +61,7 @@ clean_selected_data_2022 <- clean_data_2022 |>
 clean_selected_data_2021 <- clean_data_2021 |>
   select(
     x_id,
+    location_id,
     occupancy_date,
     organization_name,
     location_city,
