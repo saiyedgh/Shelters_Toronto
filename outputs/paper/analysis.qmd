@@ -77,9 +77,11 @@ The dataset is fairly new and limited because it was initiated in the year 2021.
 ## Methodology
 The dataset allows us to seek insights related to the last two years. Therefore, the paper will include comparisons across 2021 and 2022. Because the design of the dataset is based on the daily service, the daily statistics will be used to measure growth or decline in numbers. The analysis will also incorporate the different programs and sectors that the shelters serve and their trends and change over time. The data extraction and visualization will help the overall analysis by providing statistical and semantic insights about the operations of the shelters. Due to the majority of shelters having a homeless user base, the report will try to estimate how increasing the number of shelters can help accommodate the homeless population.
 
-Due to the majority of shelters having a homeless user base, the report will try to estimate how increasing the number of shelters can help accommodate the homeless population. Another noticeable and influencing factor in the shelter data is the addition of Covid-19-related programs that might affect the overall numbers. Hence, the analysis will aim to highlight and distinguish between the regular and Covid-19-related programs wherever possible. 
+Due to the majority of shelters having a homeless user base, the report will try to estimate how increasing the number of shelters can help accommodate the homeless population. Another noticeable and influencing factor in the shelter data is the addition of *Covid-19* related programs that might affect the overall numbers. Hence, the analysis will aim to highlight and distinguish between the regular and *Covid-19* related programs wherever possible. 
 
 ## Visuals and Results
+
+The city of Toronto is divided into four major districts: Toronto (York, Old Toronto, and East Toronto), North York, Scarborough, and Etobicoke [@districts]. The dataset also includes the new region of Vaughan. Using the district information, we can analyze the number of shelter users based on these regions. 
 
 ```{r}
 #| echo: false
