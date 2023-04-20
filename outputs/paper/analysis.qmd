@@ -24,8 +24,6 @@ bibliography: references.bib
 # GitHub: https://github.com/saiyedgh/Shelters_Toronto.git
 ```
 
-
-
 ```{r}
 #| include: false
 #| echo: false
@@ -61,27 +59,29 @@ library(lubridate)
 library(ggbump)
 ```
 
-\
-
-# Introduction
+# Introduction {#sec-introduction}
 
 Homelessness is a genuine concern of the city and the people of Toronto. The city has acquired plenty of permanent and temporary shelters to provide better housing and overnight shelters for the homeless as well as others seeking emergency housing. The city of Toronto, like many other metropolitan cities, has suffered from the problem of homelessness for years. However, the role of the shelters in helping the homeless might go unnoticed because of the increasing numbers on the streets. My analysis aims to discover the issue in detail using data provided by the city of Toronto. Through my analysis, I aim to take you deep into statistics as well as focus on the patterns in order to develop empathy for the homeless. Lastly, the analysis will conclude the role of the shelters of Toronto in helping people overall and how they can improve to include more people in need.
 
-# Data
+# Data {#sec-data}
 
 ## Source
+
 The dataset is obtained from Opendatatoronto [@opendatatoronto], which focuses on daily shelter provided by the city and charities in Toronto. The overnight service keeps a record of the daily users accessing the shelter service with capacity and other important information. The data identifies the unique locations, the organizations involved, the various districts of the city, the types of programs, and the sector of the shelters.
 
 The dataset is fairly new and limited because it was initiated in the year 2021. Despite the limited years of data, it is updated and maintained frequently, having a gold status on the platform. The dataset does not explicitly incorporates homelessness in its variables. However, according to the database glossary and description, the main users of the shelter service are predominantly the homeless [@glossary].
 
 ## Methodology
+
 The dataset allows us to seek insights related to the last two years. Therefore, the paper will include comparisons across 2021 and 2022. Because the design of the dataset is based on the daily service, the daily statistics will be used to measure growth or decline in numbers. The analysis will also incorporate the different programs and sectors that the shelters serve and their trends and change over time. The data extraction and visualization will help the overall analysis by providing statistical and semantic insights about the operations of the shelters. Due to the majority of shelters having a homeless user base, the report will try to estimate how increasing the number of shelters can help accommodate the homeless population.
 
-Due to the majority of shelters having a homeless user base, the report will try to estimate how increasing the number of shelters can help accommodate the homeless population. Another noticeable and influencing factor in the shelter data is the addition of *Covid-19* related programs that might affect the overall numbers. Hence, the analysis will aim to highlight and distinguish between the regular and *Covid-19* related programs wherever possible. 
+Due to the majority of shelters having a homeless user base, the report will try to estimate how increasing the number of shelters can help accommodate the homeless population. Another noticeable and influencing factor in the shelter data is the addition of *Covid-19* related programs that might affect the overall numbers. Hence, the analysis will aim to highlight and distinguish between the regular and *Covid-19* related programs wherever possible.
 
-## Visuals and Results
+## Data Visuals and Results {#sec-dataVisuals}
 
-The city of Toronto is divided into four major districts: Toronto (York, Old Toronto, and East Toronto), North York, Scarborough, and Etobicoke [@districts]. The dataset also includes the new region of Vaughan. Using the district information, we can analyze the number of shelter users based on these regions. 
+### The number of shelter and users by city districts.
+
+The city of Toronto is divided into four major districts: Toronto (York, Old Toronto, and East Toronto), North York, Scarborough, and Etobicoke [@districts]. The dataset also includes the new region of Vaughan. Using the district information, we can analyze the number of shelter users based on these regions.
 
 ```{r}
 #| echo: false
@@ -105,9 +105,6 @@ data_2022$occupancy_date <- ymd(data_2022$occupancy_date)
 data_2021$occupancy_date <- ymd(data_2021$occupancy_date)
 
 ```
-
-
-
 
 ```{r}
 #| echo: false
@@ -148,7 +145,7 @@ total_row_2021 <- data.frame(location_city = "Total",
 shelters_w_total_2021 <- rbind(df_2021, total_row_2021)
 
 shelters_w_total_2021 |>
-  kable(col.names = c("District", "Numbers", "Users")) |>
+  kable(col.names = c("District", "Shelters", "Users")) |>
   kable_styling(
     latex_options = c("striped", "hold_position"),
     font_size=10) |>
@@ -156,6 +153,7 @@ shelters_w_total_2021 |>
   row_spec(7, bold=T)
 ```
 
+@tbl-1 displays the distribution of shelters across the districts of the city. The difference in the numbers is obvious with central Toronto having the highest number of shelters, which ultimately accommodates the most number of people. The Toronto district within the city is the most populous region. The difference is interesting because the population of North York and Scarborough is much closer to the population of Toronto [@population]. Nevertheless, the shelter distribution is nowhere near the actual population, with the district of Toronto surpassing the number of shelters compared to all other districts, even the populous ones.
 
 ```{r}
 #| echo: false
@@ -196,7 +194,7 @@ total_row_2021 <- data.frame(location_city = "Total",
 shelters_w_total <- rbind(df_2022, total_row_2021)
 
 shelters_w_total |>
-  kable(col.names = c("District", "Numbers", "Users")) |>
+  kable(col.names = c("District", "Shelters", "Users")) |>
   kable_styling(
     latex_options = c("striped", "hold_position"),
     font_size=10) |>
@@ -204,15 +202,17 @@ shelters_w_total |>
   row_spec(7, bold=T)
 ```
 
+\newpage
 
+Strikingly, according to @tbl-2, the average number of users per day has increased drastically despite the decrease in the number of facilities, indicating optimized usage of the available space or possible overcrowding of the shelters. Furthermore, the increase in average daily users is more evident in the central region of Toronto, with a slight increase across other districts.
 
 ```{r}
 #| echo: false
 #| warning: false
-#| label: fig_01
+#| label: fig-1
 #| fig-cap: Number of shelters in Toronto by district.
-#| fig-align: center
-#| fig-width: 6
+#| fig-height: 3
+#| fig-width: 5.5
 
 ## Number of shelters in Toronto
 
@@ -232,10 +232,13 @@ data_graph_shelters |>
      x = "Districts within the city of Toronto",
      y = "Number of Shelters"
    ) +
-  theme(axis.line = element_line(colour = "#5a6472", # border for the figure
+  theme(axis.line = element_line(colour = "#5a6472", 
                                  size = 0.5, linetype = "solid"))
 ```
-\
+
+In the above chart (@fig-1), the district of Toronto can be seen as having the highest number of shelters compared to all other regions. The number can be due to the location of the old city in the central region, however, the distribution restricts the number of people looking for shelters to head to the central part of the city. Likewise, the numbers are not proportionate to the population of the city districts. There has been no observable change in the number of shelters from 2021 -2022 based on the data in @tbl-1 and @tbl-2. \newpage
+
+### The number of shelter users by program.
 
 ```{r}
 #| echo: false
@@ -259,13 +262,13 @@ users_2021 <- data_2021 |>
 users_2021$users_per_month <- users_2021$service_user_count / 30.417 
 ```
 
-
 ```{r}
 #| echo: false
 #| warning: false
-#| label: fig_02
+#| label: fig-2
 #| fig-cap: Number of people using shelters by Program - 2021.
 #| fig-align: center
+#| fig-height: 2.4
 #| fig-width: 6
 
 
@@ -286,18 +289,19 @@ users_2021 |>
   scale_y_log10(breaks = breaks_log(n = 10),
               labels = label_comma()) +
   theme(legend.spacing.y = unit(0.5, 'cm'),
-        axis.line = element_line(colour = "#5a6472", # border for the figure
+        axis.line = element_line(colour = "#5a6472",
                                  size = 0.5, linetype = "solid"))
 
 ```
 
-
+The above graph (@fig-2) distinguishes between the various programs of overnight shelters. The base shelter and *Covid-19* programs housed the most people, with a steady growth in the refugee shelter program. The increased number of refugees is also raising the number of people in need of shelter.
 
 ```{r}
 #| echo: false
 #| warning: false
-#| label: fig_03
+#| label: fig-3
 #| fig-cap: Number of people using shelters over time by Program - 2022.
+#| fig-height: 2.4
 #| fig-align: center
 #| fig-width: 6
 
@@ -318,12 +322,14 @@ users_2022 |>
   scale_y_log10(breaks = breaks_log(n = 10),
               labels = label_comma()) +
   theme(legend.spacing.y = unit(0.5, 'cm'),
-        axis.line = element_line(colour = "#5a6472", # border for the figure
+        axis.line = element_line(colour = "#5a6472", 
                                  size = 0.5, linetype = "solid"))
 
 ```
 
+The number of users has increased, according to @fig-3, with a daily average of 6000 to 8000 people in total. All sector users have increased in number except for *Covid-19* program, which has decreased users compared to last year. The number of refugee program users keeps increasing and has more than doubled compared to the year prior. According to @fig-3, the winter program is most active from December to March with an increased number of people using the facilities in 2022 compared to the year before.
 
+### The number of shelter users by sector.
 
 ```{r}
 #| echo: false
@@ -348,13 +354,13 @@ users_sector_2022$users_per_month <- users_sector_2022$service_user_count / 30.4
 
 ```
 
-
 ```{r}
 #| echo: false
 #| warning: false
-#| label: fig_04
+#| label: fig-4
 #| fig-cap: Number of people using shelters over time by Sector - 2021.
 #| fig-align: center
+#| fig-height: 2.4
 #| fig-width: 6
 
 users_sector_2021 |> 
@@ -371,18 +377,20 @@ users_sector_2021 |>
     scale_y_continuous(limits = c(0, 10000),
                        breaks = seq(1000, 10000, 1000)) +
   theme(legend.spacing.y = unit(0.5, 'cm'),
-        axis.line = element_line(colour = "#5a6472", # border for the figure
+        axis.line = element_line(colour = "#5a6472", 
                                  size = 0.5, linetype = "solid"))
 
 ```
 
+@fig-4 indicates that the users based on sectors are predominantly from the families, men, or mixed adults sectors. Not only are their numbers more compared to other sectors, but they also keep increasing in terms of users throughout the year. The user base has increased almost identically across these three sectors. However, the sectors specific to women and youth have not seen a visible increase in the number of users.
 
 ```{r}
 #| echo: false
 #| warning: false
-#| label: fig_05
+#| label: fig-5
 #| fig-cap: Number of people using shelters over time by Sector - 2022.
 #| fig-align: center
+#| fig-height: 2.4
 #| fig-width: 6
 
 users_sector_2022 |> 
@@ -399,22 +407,36 @@ users_sector_2022 |>
   scale_y_continuous(limits = c(0, 10000),
                      breaks = seq(1000, 10000, 1000)) +
   theme(legend.spacing.y = unit(0.5, 'cm'),
-        axis.line = element_line(colour = "#5a6472", # border for the figure
+        axis.line = element_line(colour = "#5a6472",
                                  size = 0.5, linetype = "solid"))
 
 ```
-\
 
+Moving from a visible growth in the numbers from the previous year, this year has a similar pattern -- showing a rise in the user numbers across the three sectors. @fig-5 demonstrates an obvious gain of users in the sectors of men, women, and mixed adults compared to the sectors for women and youth, which stay almost similar throughout the year.
 
 
 # Discussion
 
-Coming soon...
+## The unequal distribution of shelters can become problematic.
+
+The shelters are not distributed according to the population of the districts, with the central part of Toronto taking the weight of the most number of shelters. Because of this trend demonstrated in @sec-dataVisuals, the new locations are less likely to increase in other parts of the city. If the city intends to increase the number of shelters, it would be wise to consider the location trend during the planning process. According to (@housingStats), overall housing prices are increasing at a noticeable rate. As the cost of housing increases without the increase in pay, the vacancy rates are likely to increase in the coming years. If the city does not increase the number of shelters across all districts, the housing crisis will force more people to head to the city center. According to @tbl-1 and @tbl-2 the number of shelters has decreased in the year 2022 while the population living in the shelters has risen. The city of Toronto has averaged the highest number of daily users -- indicating possible overcrowding of the existing facilities.
+
+## The city is making progress in accommodating more people.
+
+The daily user average has grown in the available shelters demonstrated in @sec-dataVisuals. This can be due to the city's efforts towards improving the existing facilities to house more people while also building new shelters. According to the city government, the city is expanding its existing shelter sites and creating replacements for decommissioned sites [@improveShelters]. However, the focus of the city has been *Covid-19* related to shelters throughout the years 2021 and 2022. The physical distancing protocols also pushed the city to develop more facilities and create more space within the existing locations. We also learned that in addition to the base shelters, the city is also accommodating an increasing number of refugees every year by building shelters specific to their needs. Similarly, the winter program has also seen a rise in the number of daily users. The user growth, especially in the refugee and winter programs, indicates a positive increase and care by the city of Toronto. As the city keeps up with the growing needs of people requiring shelters, the chances of people growing individually and moving out of shelters will increase. However, it also depends on other factors like living conditions that the dataset does not express. In order to provide better service to the population, the city needs to develop more facilities and improve the living conditions of the existing facilities by increasing funding, care, and living space for the users. 
+
+## The number of users is increasing in specific sectors only.
+
+According to Homeless Hub Canada, the female and youth population suffering from homelessness is 34% and 11% respectively [@homelessHub]. Nevertheless, the number of users has not increased in these specific sectors \(@fig-4 and @fig-5\). On the contrary, the number of users is growing in the families, mixed adults, and men sectors. The increase also indicates that women and youth are most likely using these three sectors instead of their gender and age-specific locations. The scale of the major three sectors can also be due to the present need and conditional funding. Nevertheless, the women and youth sectors need more shelters and funding to serve their specific audiences.
+
 
 # Limitations
 
-Coming soon...
+## The changing programs and sectors.
 
+## The case of increased users with limited space, and the living conditions.
+
+## Empathy
 
 \newpage
 
@@ -422,7 +444,7 @@ Coming soon...
 
 ## Code
 
-The report was created using *`R`* [@R] and *`R Studio`* [@r_studio] with *`Quarto`* [@quarto] -- a new version of *`R Markdown`* [@r_markdown]. The main library utilized for this purpose is *`Tidyverse`* [@tidyverse]. Its used sub-packages include *`dplyr`* [@dplyr] to enable query-like syntax, and *`ggplot`* [@ggplot] to create graphs and charts. Other packages and tools include *`here`* [@here], *`janitor`* [@janitor], *`knitr`* [@knitr], *`kableExtra`* [@kableExtra], and *`scales`* [@scales]. Their respective function is to find *csv* files, clean data, generate reports, create tables, and enable customized legends and break points. Lastly, as *csv* files convert the date column to character, the *`lubridate`* [@lubridate] package was used to convert character dates to proper dates, something essential to plot date or time variables.
+The report was created using *`R`* [@R] and *`R Studio`* [@r_studio] with *`Quarto`* [@quarto] -- a new version of *`R Markdown`* [@r_markdown]. The main library utilized for this purpose is *`Tidyverse`* [@tidyverse]. Its used sub-packages include *`dplyr`* [@dplyr] to enable query-like syntax, and *`ggplot`* [@ggplot] to create graphs and charts. Other packages and tools include *`here`* [@here], *`janitor`* [@janitor], *`knitr`* [@knitr], *`kableExtra`* [@kableExtra], and *`scales`* [@scales]. Their respective function is to find *csv* files, clean data, generate reports, create tables, and enable customized legends and break points. Lastly, as *csv* files convert the date column to character, the *`lubridate`* [@lubridate] package was used to convert character dates to proper dates, essential for plotting date and time variables.
 
 \newpage
 
