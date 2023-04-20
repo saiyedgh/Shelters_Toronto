@@ -69,6 +69,17 @@ Homelessness is a genuine concern of the city and the people of Toronto. The cit
 
 # Data
 
+## Source
+The dataset is obtained from Opendatatoronto [@opendatatoronto], which focuses on daily shelter provided by the city and charities in Toronto. The overnight service keeps a record of the daily users accessing the shelter service with capacity and other important information. The data identifies the unique locations, the organizations involved, the various districts of the city, the types of programs, and the sector of the shelters.
+
+The dataset is fairly new and limited because it was initiated in the year 2021. Despite the limited years of data, it is updated and maintained frequently, having a gold status on the platform. The dataset does not explicitly incorporates homelessness in its variables. However, according to the database glossary and description, the main users of the shelter service are predominantly the homeless [@glossary].
+
+## Methodology
+The dataset allows us to seek insights related to the last two years. Therefore, the paper will include comparisons across 2021 and 2022. Because the design of the dataset is based on the daily service, the daily statistics will be used to measure growth or decline in numbers. The analysis will also incorporate the different programs and sectors that the shelters serve and their trends and change over time. The data extraction and visualization will help the overall analysis by providing statistical and semantic insights about the operations of the shelters. Due to the majority of shelters having a homeless user base, the report will try to estimate how increasing the number of shelters can help accommodate the homeless population.
+
+Due to the majority of shelters having a homeless user base, the report will try to estimate how increasing the number of shelters can help accommodate the homeless population. Another noticeable and influencing factor in the shelter data is the addition of Covid-19-related programs that might affect the overall numbers. Hence, the analysis will aim to highlight and distinguish between the regular and Covid-19-related programs wherever possible. 
+
+## Visuals and Results
 
 ```{r}
 #| echo: false
@@ -392,13 +403,7 @@ users_sector_2022 |>
 ```
 \
 
-dasdasdasdadasdajfb dasdhajshdkahdahjs sdajkhdjkahsdjka.
 
-\
-
-# Results
-
-Coming soon...
 
 # Discussion
 
@@ -408,9 +413,6 @@ Coming soon...
 
 Coming soon...
 
-# Conclusion
-
-Coming soon...
 
 \newpage
 
