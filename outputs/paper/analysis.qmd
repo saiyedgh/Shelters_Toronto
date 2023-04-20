@@ -25,6 +25,7 @@ bibliography: references.bib
 ```
 
 
+
 ```{r}
 #| include: false
 #| echo: false
@@ -33,6 +34,20 @@ bibliography: references.bib
 
 ##### Install and run the required libraries and packages #####
 
+## Install
+# uncomment the installation files for your
+# install.packages("tidyverse")
+# install.packages("here")
+# install.packages("readr")
+# install.packages("readxl")
+# install.packages("kableExtra")
+# install.packages("scales")
+# install.packages("knitr")
+# install.packages("janitor")
+# install.packages("lubridate")
+# install.packages("ggbump")
+
+## Run
 library(opendatatoronto)
 library(tidyverse)
 library(here)
@@ -42,8 +57,17 @@ library(kableExtra)
 library(scales)
 library(knitr)
 library(janitor)
+library(lubridate)
+library(ggbump)
 ```
+
 \
+
+# Introduction
+
+Homelessness is a genuine concern of the city and the people of Toronto. The city has acquired plenty of permanent and temporary shelters to provide better housing and overnight shelters for the homeless as well as others seeking emergency housing. The city of Toronto, like many other metropolitan cities, has suffered from the problem of homelessness for years. However, the role of the shelters in helping the homeless might go unnoticed because of the increasing numbers on the streets. My analysis aims to discover the issue in detail using data provided by the city of Toronto. Through my analysis, I aim to take you deep into statistics as well as focus on the patterns in order to develop empathy for the homeless. Lastly, the analysis will conclude the role of the shelters of Toronto in helping people overall and how they can improve to include more people in need.
+
+# Data
 
 
 ```{r}
@@ -62,12 +86,69 @@ data_2021 <- read_csv(
   show_col_types = FALSE
 )
 
+# convert character to date
+data_2022$occupancy_date <- ymd(data_2022$occupancy_date)
+
+data_2021$occupancy_date <- ymd(data_2021$occupancy_date)
+
+```
+
+
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: tbl-1
+#| tbl-cap: Total number of shelters in the city of Toronto with average daily users - 2021.
+
+location_and_district_2021 <- data_2021 |> 
+  select(location_id, location_city) |>
+  distinct() |>
+  group_by(location_id, location_city) |>
+  summarise(total_count=n(), .groups = 'drop')
+
+city_and_users_2021 <- data_2021 |>
+  select(location_city, service_user_count) |>
+  group_by(location_city) |> 
+  summarise(total_users = sum(service_user_count), .groups = 'drop')
+
+total_shelters_2021 <- location_and_district_2021 |>
+  group_by(location_city) |>
+  count()
+  
+shelters_sum_2021 <- sum(total_shelters_2021$n)
+
+combined_df_2021 <- left_join(total_shelters_2021, city_and_users_2021, by = 'location_city') |>
+  as.data.frame()
+
+combined_df_2021$users_per_year <- combined_df_2021$total_users / 365
+
+users_sum_2021 <- sum(combined_df_2021$users_per_year)
+
+df_2021 <- combined_df_2021 |>
+  select(location_city, n, users_per_year)
+
+total_row_2021 <- data.frame(location_city = "Total",
+                         n = shelters_sum_2021, users_per_year = users_sum_2021)
+
+shelters_w_total_2021 <- rbind(df_2021, total_row_2021)
+
+shelters_w_total_2021 |>
+  kable(col.names = c("District", "Numbers", "Users")) |>
+  kable_styling(
+    latex_options = c("striped", "hold_position"),
+    font_size=10) |>
+  row_spec(0, bold=T) |> 
+  row_spec(7, bold=T)
 ```
 
 
 ```{r}
 #| echo: false
 #| warning: false
+#| label: tbl-2
+#| tbl-cap: Total number of shelters in the city of Toronto with average daily users - 2022.
 
 location_and_district <- data_2022 |> 
   select(location_id, location_city) |>
@@ -75,12 +156,39 @@ location_and_district <- data_2022 |>
   group_by(location_id, location_city) |>
   summarise(total_count=n(), .groups = 'drop')
 
+city_and_users <- data_2022 |>
+  select(location_city, service_user_count) |>
+  group_by(location_city) |> 
+  summarise(total_users = sum(service_user_count), .groups = 'drop')
 
-```
+total_shelters <- location_and_district |>
+  group_by(location_city) |>
+  count()
+  
+shelters_sum <- sum(total_shelters$n)
 
+combined_df <- left_join(total_shelters, city_and_users, by = 'location_city') |>
+  as.data.frame()
 
-```{r}
+combined_df$users_per_year <- combined_df$total_users / 365
 
+users_sum <- sum(combined_df$users_per_year)
+
+df_2022 <- combined_df |>
+  select(location_city, n, users_per_year)
+
+total_row_2021 <- data.frame(location_city = "Total",
+                         n = shelters_sum, users_per_year = users_sum)
+
+shelters_w_total <- rbind(df_2022, total_row_2021)
+
+shelters_w_total |>
+  kable(col.names = c("District", "Numbers", "Users")) |>
+  kable_styling(
+    latex_options = c("striped", "hold_position"),
+    font_size=10) |>
+  row_spec(0, bold=T) |> 
+  row_spec(7, bold=T)
 ```
 
 
@@ -113,39 +221,196 @@ data_graph_shelters |>
    ) +
   theme(axis.line = element_line(colour = "#5a6472", # border for the figure
                                  size = 0.5, linetype = "solid"))
+```
+\
+
+```{r}
+#| echo: false
+#| warning: false
+
+users_2022 <- data_2022 |> 
+  select(occupancy_date, program_area, service_user_count) |>
+  group_by(occupancy_date = lubridate::floor_date(occupancy_date, 'month'), program_area) |> 
+  summarise_each(funs(sum))
+
+#converting repetitive daily users to per month average
+users_2022$users_per_month <- users_2022$service_user_count / 30.417 
+
+users_2021 <- data_2021 |>
+  filter(program_area != "NA") |> 
+  select(occupancy_date, program_area, service_user_count) |>
+  group_by(occupancy_date = lubridate::floor_date(occupancy_date, 'month'), program_area) |> 
+  summarise_each(funs(sum))
+
+#converting repetitive daily users to per month average
+users_2021$users_per_month <- users_2021$service_user_count / 30.417 
+```
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: fig_02
+#| fig-cap: Number of people using shelters by Program - 2021.
+#| fig-align: center
+#| fig-width: 6
+
+
+users_2021 |>
+  select(occupancy_date, program_area, users_per_month) |> 
+  ggplot(aes(x = occupancy_date, y = users_per_month, color = program_area)) +
+  geom_bump(size = 1.25) +
+  geom_point(size = 2.5) +
+  theme_minimal() +
+  labs(
+    x = "Average daily users over the year",
+    y = "Number of Users"
+  ) +
+  scale_x_date(date_breaks = "1 month",
+               date_labels = "%b") +
+  scale_colour_discrete(name = "Shelter Program Type",
+                        labels = function(x) str_wrap(x, width = 15)) +
+  scale_y_log10(breaks = breaks_log(n = 10),
+              labels = label_comma()) +
+  theme(legend.spacing.y = unit(0.5, 'cm'),
+        axis.line = element_line(colour = "#5a6472", # border for the figure
+                                 size = 0.5, linetype = "solid"))
 
 ```
 
 
 
-# Introduction
+```{r}
+#| echo: false
+#| warning: false
+#| label: fig_03
+#| fig-cap: Number of people using shelters over time by Program - 2022.
+#| fig-align: center
+#| fig-width: 6
 
-Homelessness is a genuine concern of the city and the people of Toronto. The city has acquired plenty of permanent and temporary shelters to provide better housing and overnight shelters for the homeless as well as others seeking emergency housing. The city of Toronto, like many other metropolitan cities, has suffered from the problem of homelessness for years. However, the role of the shelters in helping the homeless might go unnoticed because of the increasing numbers on the streets. My analysis aims to discover the issue in detail using data provided by the city of Toronto. Through my analysis, I aim to take you deep into statistics as well as focus on the patterns in order to develop empathy for the homeless. Lastly, the analysis will conclude the role of the shelters of Toronto in helping people overall and how they can improve to include more people in need.
+users_2022 |> 
+  select(occupancy_date, program_area, users_per_month) |> 
+  ggplot(aes(x = occupancy_date, y = users_per_month, color = program_area)) +
+  geom_bump(size = 1.25) +
+  geom_point(size = 2.5) +
+  theme_minimal() +
+  labs(
+    x = "Average daily users over the year",
+    y = "Number of Users"
+  ) +
+  scale_x_date(date_breaks = "1 month",
+               date_labels = "%b") +
+  scale_colour_discrete(name = "Shelter Program Type",
+                        labels = function(x) str_wrap(x, width = 15)) +
+  scale_y_log10(breaks = breaks_log(n = 10),
+              labels = label_comma()) +
+  theme(legend.spacing.y = unit(0.5, 'cm'),
+        axis.line = element_line(colour = "#5a6472", # border for the figure
+                                 size = 0.5, linetype = "solid"))
+
+```
 
 
-# Data
 
-Coming soon...
+```{r}
+#| echo: false
+#| warning: false
+
+
+users_sector_2021 <- data_2021 |>
+  select(occupancy_date, sector, service_user_count) |>
+  group_by(occupancy_date = lubridate::floor_date(occupancy_date, 'month'), sector) |> 
+  summarise_each(funs(sum))
+
+#converting repetitive daily users to per month average
+users_sector_2021$users_per_month <- users_sector_2021$service_user_count / 30.417 
+
+users_sector_2022 <- data_2022 |> 
+  select(occupancy_date, sector, service_user_count) |>
+  group_by(occupancy_date = lubridate::floor_date(occupancy_date, 'month'), sector) |> 
+  summarise_each(funs(sum))
+
+#converting repetitive daily users to per month average
+users_sector_2022$users_per_month <- users_sector_2022$service_user_count / 30.417 
+
+```
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: fig_04
+#| fig-cap: Number of people using shelters over time by Sector - 2021.
+#| fig-align: center
+#| fig-width: 6
+
+users_sector_2021 |> 
+  ggplot(aes(x = occupancy_date, y = users_per_month, fill = sector)) +
+  geom_area() +
+  theme_minimal() +
+  labs(
+    x = "Average daily users over the year",
+    y = "Number of Users",
+    fill = "Sector"
+  ) +
+  scale_x_date(date_breaks = "1 month",
+               date_labels = "%b") +
+    scale_y_continuous(limits = c(0, 10000),
+                       breaks = seq(1000, 10000, 1000)) +
+  theme(legend.spacing.y = unit(0.5, 'cm'),
+        axis.line = element_line(colour = "#5a6472", # border for the figure
+                                 size = 0.5, linetype = "solid"))
+
+```
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: fig_05
+#| fig-cap: Number of people using shelters over time by Sector - 2022.
+#| fig-align: center
+#| fig-width: 6
+
+users_sector_2022 |> 
+  ggplot(aes(x = occupancy_date, y = users_per_month, fill = sector)) +
+  geom_area() +
+  theme_minimal() +
+  labs(
+    x = "Average daily users over the year",
+    y = "Number of Users",
+    fill = "Sector"
+  ) +
+  scale_x_date(date_breaks = "1 month",
+               date_labels = "%b") +
+  scale_y_continuous(limits = c(0, 10000),
+                     breaks = seq(1000, 10000, 1000)) +
+  theme(legend.spacing.y = unit(0.5, 'cm'),
+        axis.line = element_line(colour = "#5a6472", # border for the figure
+                                 size = 0.5, linetype = "solid"))
+
+```
+\
+
+dasdasdasdadasdajfb dasdhajshdkahdahjs sdajkhdjkahsdjka.
+
+\
 
 # Results
 
 Coming soon...
 
-
 # Discussion
 
 Coming soon...
-
 
 # Limitations
 
 Coming soon...
 
-
 # Conclusion
 
 Coming soon...
-
 
 \newpage
 
@@ -153,8 +418,7 @@ Coming soon...
 
 ## Code
 
-The report was created using *`R`* [@R] and *`R Studio`* [@r_studio] with *`Quarto`* [@quarto] -- a new version of *`R Markdown`* [@r_markdown]. The main library utilized for this purpose is *`Tidyverse`* [@tidyverse]. Its used sub-packages include *`dplyr`* [@dplyr] to enable query-like syntax, and *`ggplot`* [@ggplot] to create graphs and charts. Other packages and tools include *`here`* [@here], *`janitor`* [@janitor], *`knitr`* [@knitr], *`kableExtra`* [@kableExtra], and *`scales`* [@scales]. Their respective function is to find *CSV* files, clean data, generate reports, create tables, and enable customized legends and break points.
-
+The report was created using *`R`* [@R] and *`R Studio`* [@r_studio] with *`Quarto`* [@quarto] -- a new version of *`R Markdown`* [@r_markdown]. The main library utilized for this purpose is *`Tidyverse`* [@tidyverse]. Its used sub-packages include *`dplyr`* [@dplyr] to enable query-like syntax, and *`ggplot`* [@ggplot] to create graphs and charts. Other packages and tools include *`here`* [@here], *`janitor`* [@janitor], *`knitr`* [@knitr], *`kableExtra`* [@kableExtra], and *`scales`* [@scales]. Their respective function is to find *csv* files, clean data, generate reports, create tables, and enable customized legends and break points. Lastly, as *csv* files convert the date column to character, the *`lubridate`* [@lubridate] package was used to convert character dates to proper dates, something essential to plot date or time variables.
 
 \newpage
 
