@@ -1,10 +1,10 @@
 ---
-title: "The Role of Shelters in Providing Emergency Housing especially for the Homeless"
+title: "Toronto is Accommodating More People and Increasing Shelter Space Every Year"
 author: Syed Hassan
-thanks: "Code and data are available at: https://github.com/saiyedgh/Shelters_Toronto.git"
+thanks: "Code and data are available at: [https://github.com/saiyedgh/Shelters_Toronto.git](https://github.com/saiyedgh/Shelters_Toronto.git)"
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
-abstract: "The city and the people of Toronto provide shelter to thousands of people every year. The majority that takes benefit from the city's overnight shelter are the homeless. The occupancy of these shelters is 100% on most nights and rarely does space go unoccupied. We need to make these shelters more accessible for the homeless and provide more funding to expand the program."
+abstract: "The city and the people of Toronto provide shelter to thousands of people in need. The users within these shelters are mainly people without homes. The number of daily users within the existing shelters is increasing drastically, with the most active regions located in the central district of Toronto. In addition to creating more space in the existing facilities, the city needs to create more shelters and improve living conditions."
 format: pdf
 toc: TRUE
 number-sections: true
@@ -86,7 +86,15 @@ data_2021$occupancy_date <- ymd(data_2021$occupancy_date)
 
 # Introduction {#sec-introduction}
 
-Homelessness is a genuine concern of the city and the people of Toronto. The city has acquired plenty of permanent and temporary shelters to provide better housing and overnight shelters for the homeless as well as others seeking emergency housing. The city of Toronto, like many other metropolitan cities, has suffered from the problem of homelessness for years. However, the role of the shelters in helping the homeless might go unnoticed because of the increasing numbers on the streets. My analysis aims to discover the issue in detail using data provided by the city of Toronto. Through my analysis, I aim to take you deep into statistics as well as focus on the patterns in order to develop empathy for the homeless. Lastly, the analysis will conclude the role of the shelters of Toronto in helping people overall and how they can improve to include more people in need.
+Homelessness is a genuine concern of the city and the people of Toronto. The city has acquired plenty of permanent and temporary shelters to provide better housing and overnight shelters for people without homes as well as others seeking emergency housing. The city of Toronto, like many other metropolitan cities, has suffered from the problem of homelessness for years. However, the role of the shelters in helping people without homes might go unnoticed because of the increasing numbers living on the streets. 
+
+The city has made good progress in providing more living space for people in need of shelters. It has done that by managing the existing shelters in a way that increases the living space and serves more people. Due to this approach, the number of people using the shelter service has increased. Although the daily average of users has risen, the number of shelters, in fact, has decreased \(@sec-dataResults\).
+
+Interestingly, most of the shelters are located in the central district of Toronto. Other populous districts, such as Scarborough and North York, do not have a proportionate number of shelters. Therefore, the central district of Toronto is responsible for serving the majority of users and has witnessed a great increase in 2022 from the previous year \(@sec-dataResults\). 
+
+The number of users has increased in all programs including the overnight shelter, the refugee response, and the winter programs. Similarly, the sectors for families, mixed adults, and men have also attracted more users, except the sectors for women and youth \(@sec-discussion\).
+
+The increase in the number of people, however, is without the increase in the number of shelters – indicating a possibility of overcrowding and raising concerns about the living conditions. The goal of the shelter program should not only be to accommodate more people but also to improve the conditions within these shelters \(@sec-limitations\).  
 
 # Data {#sec-data}
 
@@ -190,6 +198,7 @@ shelters_w_total_2021 |>
 ```
 
 @tbl-1 displays the distribution of shelters across the districts of the city. The difference in the numbers is obvious with central Toronto having the highest number of shelters, which ultimately accommodates the most number of people. The Toronto district within the city is the most populous region. The difference is interesting because the population of North York and Scarborough is much closer to the population of Toronto [@population]. Nevertheless, the shelter distribution is nowhere near the actual population, with the district of Toronto surpassing the number of shelters compared to all other districts, even the populous ones.
+\newpage
 
 ```{r}
 #| echo: false
@@ -238,8 +247,6 @@ shelters_w_total |>
   row_spec(7, bold=T)
 ```
 
-\newpage
-
 Strikingly, according to @tbl-2, the average number of users per day has increased drastically despite the decrease in the number of facilities, indicating optimized usage of the available space or possible overcrowding of the shelters. Furthermore, the increase in average daily users is more evident in the central region of Toronto, with a slight increase across other districts.
 
 ```{r}
@@ -272,8 +279,9 @@ data_graph_shelters |>
                                  size = 0.5, linetype = "solid"))
 ```
 
-In the above chart (@fig-1), the district of Toronto can be seen as having the highest number of shelters compared to all other regions. The number can be due to the location of the old city in the central region, however, the distribution restricts the number of people looking for shelters to head to the central part of the city. Likewise, the numbers are not proportionate to the population of the city districts. There has been no observable change in the number of shelters from 2021 -2022 based on the data in @tbl-1 and @tbl-2. \newpage
+In the above chart (@fig-1), the district of Toronto can be seen as having the highest number of shelters compared to all other regions. The number can be due to the location of the old city in the central region, however, the distribution restricts the number of people looking for shelters to head to the central part of the city. Likewise, the numbers are not proportionate to the population of the city districts. There has been no observable change in the number of shelters from 2021 -2022 based on the data in @tbl-1 and @tbl-2.
 
+\newpage
 ## The Number of Shelter Users by Program.
 
 ```{r}
@@ -451,7 +459,7 @@ users_sector_2022 |>
 Moving from a visible growth in the numbers from the previous year, this year has a similar pattern -- showing a rise in the user numbers across the three sectors. @fig-5 demonstrates an obvious gain of users in the sectors of men, women, and mixed adults compared to the sectors for women and youth, which stay almost similar throughout the year.
 
 
-# Discussion
+# Discussion {#sec-discussion}
 
 ## The Unequal Distribution of Shelters Can Be Problematic.
 
@@ -466,13 +474,13 @@ The daily user average has grown in the available shelters demonstrated in @sec-
 According to Homeless Hub Canada, the female and youth population suffering from homelessness is 34% and 11% respectively [@homelessHub]. Nevertheless, the number of users has not increased in these specific sectors \(@fig-4 and @fig-5\). On the contrary, the number of users is growing in the Families, Mixed Adults, and Men sectors. The increase also indicates that women and youth are most likely using these three sectors instead of their gender and age-specific locations. The scale of the major three sectors can also be due to the present need and conditional funding. Nevertheless, the Women and Youth sectors need more shelters and funding to serve their specific audiences.
 
 
-# Limitations
+# Limitations {#sec-limitations}
 
 ## The Case of Increased Users with Limited Shelters, and the Living Conditions.
 
 Earlier in our analysis (3.1, @sec-dataResults), we discovered a visible increase in the number of daily users from the year 2021 to 2022 despite the decrease in the number of shelters. The increase in daily users independently depicts a better picture, indicating that the need for increased living space is being met. However, analyzing the decline in the number of shelters with the increase in daily users hints towards overcrowding of the shelters. To better understand the ground reality through data, we also need a measurement representing the living conditions in our data set. 
 
-## Empathy
+## Empathy with the User
 
 > "The death of one man is a tragedy, the death of millions is a statistic."
 >
